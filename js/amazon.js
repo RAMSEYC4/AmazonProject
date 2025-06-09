@@ -16,7 +16,7 @@ products.forEach(product => {
           </div>
         </div>
         <div class="product-price">
-          $${(product.preiceCents / 100).toFixed(2)}
+          $${(product.priceCents / 100).toFixed(2)}
         </div>
         <div class="product-quantity-container">
           <select>
@@ -37,15 +37,44 @@ products.forEach(product => {
           <img src="images/icons/checkmark.png">
           Added
         </div>
-        <button class="add-to-cart-button button-primary">
+
+        <button class="button-primary add-to-cart-button" 
+          data-product-id="${product.id}">
           Add to Cart
         </button>
+
       </div>
   `
 })
 
 let displayProducts = document.querySelector('.products-grid')
 displayProducts.innerHTML = displayHtml;
+
+
+// this code understand what it is doing during you free time 
+document.querySelectorAll('.add-to-cart-button')
+  .forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId
+      let matchingitem;
+
+      cart.forEach((item) => {
+        if (productId === item.productId) {
+          matchingitem = item;
+        }
+      })
+      if (matchingitem) {
+        matchingitem.quantity += 1;
+      } else {
+        cart.push({
+          productId: productId,
+          quantity: 1
+        })
+      }
+      console.log(cart)
+    });
+  });
+
 
 
 
